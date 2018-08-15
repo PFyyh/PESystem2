@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pesystem.mapper.AdministrativeClassMapper" >
+  <resultMap id="BaseResultMap" type="com.pesystem.po.AdministrativeClass" >
+    <id column="ac_id" property="acId" jdbcType="VARCHAR" />
+    <result column="tester_id" property="testerId" jdbcType="VARCHAR" />
+    <result column="major_id" property="majorId" jdbcType="INTEGER" />
+    <result column="ac_name" property="acName" jdbcType="VARCHAR" />
+    <result column="ac_year" property="acYear" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ac_id, tester_id, major_id, ac_name, ac_year
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pesystem.po.AdministrativeClassExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from administrative_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from administrative_class
+    where ac_id = #{acId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from administrative_class
+    where ac_id = #{acId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pesystem.po.AdministrativeClassExample" >
+    delete from administrative_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pesystem.po.AdministrativeClass" >
+    insert into administrative_class (ac_id, tester_id, major_id, 
+      ac_name, ac_year)
+    values (#{acId,jdbcType=VARCHAR}, #{testerId,jdbcType=VARCHAR}, #{majorId,jdbcType=INTEGER}, 
+      #{acName,jdbcType=VARCHAR}, #{acYear,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pesystem.po.AdministrativeClass" >
+    insert into administrative_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="acId != null" >
+        ac_id,
+      </if>
+      <if test="testerId != null" >
+        tester_id,
+      </if>
+      <if test="majorId != null" >
+        major_id,
+      </if>
+      <if test="acName != null" >
+        ac_name,
+      </if>
+      <if test="acYear != null" >
+        ac_year,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="acId != null" >
+        #{acId,jdbcType=VARCHAR},
+      </if>
+      <if test="testerId != null" >
+        #{testerId,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        #{majorId,jdbcType=INTEGER},
+      </if>
+      <if test="acName != null" >
+        #{acName,jdbcType=VARCHAR},
+      </if>
+      <if test="acYear != null" >
+        #{acYear,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pesystem.po.AdministrativeClassExample" resultType="java.lang.Integer" >
+    select count(*) from administrative_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update administrative_class
+    <set >
+      <if test="record.acId != null" >
+        ac_id = #{record.acId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testerId != null" >
+        tester_id = #{record.testerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorId != null" >
+        major_id = #{record.majorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acName != null" >
+        ac_name = #{record.acName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acYear != null" >
+        ac_year = #{record.acYear,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update administrative_class
+    set ac_id = #{record.acId,jdbcType=VARCHAR},
+      tester_id = #{record.testerId,jdbcType=VARCHAR},
+      major_id = #{record.majorId,jdbcType=INTEGER},
+      ac_name = #{record.acName,jdbcType=VARCHAR},
+      ac_year = #{record.acYear,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pesystem.po.AdministrativeClass" >
+    update administrative_class
+    <set >
+      <if test="testerId != null" >
+        tester_id = #{testerId,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        major_id = #{majorId,jdbcType=INTEGER},
+      </if>
+      <if test="acName != null" >
+        ac_name = #{acName,jdbcType=VARCHAR},
+      </if>
+      <if test="acYear != null" >
+        ac_year = #{acYear,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ac_id = #{acId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pesystem.po.AdministrativeClass" >
+    update administrative_class
+    set tester_id = #{testerId,jdbcType=VARCHAR},
+      major_id = #{majorId,jdbcType=INTEGER},
+      ac_name = #{acName,jdbcType=VARCHAR},
+      ac_year = #{acYear,jdbcType=INTEGER}
+    where ac_id = #{acId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pesystem.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.pesystem.po.Student" >
+    <id column="stdnt_id" property="stdntId" jdbcType="CHAR" />
+    <result column="ac_id" property="acId" jdbcType="VARCHAR" />
+    <result column="stdnt_name" property="stdntName" jdbcType="VARCHAR" />
+    <result column="stdnt_birthday" property="stdntBirthday" jdbcType="DATE" />
+    <result column="stdnt_ic" property="stdntIc" jdbcType="VARCHAR" />
+    <result column="stu_home" property="stuHome" jdbcType="VARCHAR" />
+    <result column="stdnt_gender_id" property="stdntGenderId" jdbcType="CHAR" />
+    <result column="stdnt_nation_id" property="stdntNationId" jdbcType="CHAR" />
+    <result column="stdnt_origin_id" property="stdntOriginId" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    stdnt_id, ac_id, stdnt_name, stdnt_birthday, stdnt_ic, stu_home, stdnt_gender_id, 
+    stdnt_nation_id, stdnt_origin_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pesystem.po.StudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where stdnt_id = #{stdntId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student
+    where stdnt_id = #{stdntId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pesystem.po.StudentExample" >
+    delete from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pesystem.po.Student" >
+    insert into student (stdnt_id, ac_id, stdnt_name, 
+      stdnt_birthday, stdnt_ic, stu_home, 
+      stdnt_gender_id, stdnt_nation_id, stdnt_origin_id
+      )
+    values (#{stdntId,jdbcType=CHAR}, #{acId,jdbcType=VARCHAR}, #{stdntName,jdbcType=VARCHAR}, 
+      #{stdntBirthday,jdbcType=DATE}, #{stdntIc,jdbcType=VARCHAR}, #{stuHome,jdbcType=VARCHAR}, 
+      #{stdntGenderId,jdbcType=CHAR}, #{stdntNationId,jdbcType=CHAR}, #{stdntOriginId,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pesystem.po.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stdntId != null" >
+        stdnt_id,
+      </if>
+      <if test="acId != null" >
+        ac_id,
+      </if>
+      <if test="stdntName != null" >
+        stdnt_name,
+      </if>
+      <if test="stdntBirthday != null" >
+        stdnt_birthday,
+      </if>
+      <if test="stdntIc != null" >
+        stdnt_ic,
+      </if>
+      <if test="stuHome != null" >
+        stu_home,
+      </if>
+      <if test="stdntGenderId != null" >
+        stdnt_gender_id,
+      </if>
+      <if test="stdntNationId != null" >
+        stdnt_nation_id,
+      </if>
+      <if test="stdntOriginId != null" >
+        stdnt_origin_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stdntId != null" >
+        #{stdntId,jdbcType=CHAR},
+      </if>
+      <if test="acId != null" >
+        #{acId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdntName != null" >
+        #{stdntName,jdbcType=VARCHAR},
+      </if>
+      <if test="stdntBirthday != null" >
+        #{stdntBirthday,jdbcType=DATE},
+      </if>
+      <if test="stdntIc != null" >
+        #{stdntIc,jdbcType=VARCHAR},
+      </if>
+      <if test="stuHome != null" >
+        #{stuHome,jdbcType=VARCHAR},
+      </if>
+      <if test="stdntGenderId != null" >
+        #{stdntGenderId,jdbcType=CHAR},
+      </if>
+      <if test="stdntNationId != null" >
+        #{stdntNationId,jdbcType=CHAR},
+      </if>
+      <if test="stdntOriginId != null" >
+        #{stdntOriginId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pesystem.po.StudentExample" resultType="java.lang.Integer" >
+    select count(*) from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update student
+    <set >
+      <if test="record.stdntId != null" >
+        stdnt_id = #{record.stdntId,jdbcType=CHAR},
+      </if>
+      <if test="record.acId != null" >
+        ac_id = #{record.acId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stdntName != null" >
+        stdnt_name = #{record.stdntName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stdntBirthday != null" >
+        stdnt_birthday = #{record.stdntBirthday,jdbcType=DATE},
+      </if>
+      <if test="record.stdntIc != null" >
+        stdnt_ic = #{record.stdntIc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuHome != null" >
+        stu_home = #{record.stuHome,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stdntGenderId != null" >
+        stdnt_gender_id = #{record.stdntGenderId,jdbcType=CHAR},
+      </if>
+      <if test="record.stdntNationId != null" >
+        stdnt_nation_id = #{record.stdntNationId,jdbcType=CHAR},
+      </if>
+      <if test="record.stdntOriginId != null" >
+        stdnt_origin_id = #{record.stdntOriginId,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update student
+    set stdnt_id = #{record.stdntId,jdbcType=CHAR},
+      ac_id = #{record.acId,jdbcType=VARCHAR},
+      stdnt_name = #{record.stdntName,jdbcType=VARCHAR},
+      stdnt_birthday = #{record.stdntBirthday,jdbcType=DATE},
+      stdnt_ic = #{record.stdntIc,jdbcType=VARCHAR},
+      stu_home = #{record.stuHome,jdbcType=VARCHAR},
+      stdnt_gender_id = #{record.stdntGenderId,jdbcType=CHAR},
+      stdnt_nation_id = #{record.stdntNationId,jdbcType=CHAR},
+      stdnt_origin_id = #{record.stdntOriginId,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pesystem.po.Student" >
+    update student
+    <set >
+      <if test="acId != null" >
+        ac_id = #{acId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdntName != null" >
+        stdnt_name = #{stdntName,jdbcType=VARCHAR},
+      </if>
+      <if test="stdntBirthday != null" >
+        stdnt_birthday = #{stdntBirthday,jdbcType=DATE},
+      </if>
+      <if test="stdntIc != null" >
+        stdnt_ic = #{stdntIc,jdbcType=VARCHAR},
+      </if>
+      <if test="stuHome != null" >
+        stu_home = #{stuHome,jdbcType=VARCHAR},
+      </if>
+      <if test="stdntGenderId != null" >
+        stdnt_gender_id = #{stdntGenderId,jdbcType=CHAR},
+      </if>
+      <if test="stdntNationId != null" >
+        stdnt_nation_id = #{stdntNationId,jdbcType=CHAR},
+      </if>
+      <if test="stdntOriginId != null" >
+        stdnt_origin_id = #{stdntOriginId,jdbcType=CHAR},
+      </if>
+    </set>
+    where stdnt_id = #{stdntId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pesystem.po.Student" >
+    update student
+    set ac_id = #{acId,jdbcType=VARCHAR},
+      stdnt_name = #{stdntName,jdbcType=VARCHAR},
+      stdnt_birthday = #{stdntBirthday,jdbcType=DATE},
+      stdnt_ic = #{stdntIc,jdbcType=VARCHAR},
+      stu_home = #{stuHome,jdbcType=VARCHAR},
+      stdnt_gender_id = #{stdntGenderId,jdbcType=CHAR},
+      stdnt_nation_id = #{stdntNationId,jdbcType=CHAR},
+      stdnt_origin_id = #{stdntOriginId,jdbcType=CHAR}
+    where stdnt_id = #{stdntId,jdbcType=CHAR}
+  </update>
+</mapper>

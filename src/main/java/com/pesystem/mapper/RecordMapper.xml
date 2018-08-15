@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pesystem.mapper.RecordMapper" >
+  <resultMap id="BaseResultMap" type="com.pesystem.po.Record" >
+    <id column="rec_year" property="recYear" jdbcType="DATE" />
+    <id column="stdnt_id" property="stdntId" jdbcType="CHAR" />
+    <result column="rec_height" property="recHeight" jdbcType="DECIMAL" />
+    <result column="rec_eight" property="recEight" jdbcType="DECIMAL" />
+    <result column="rec_vtal_capacity" property="recVtalCapacity" jdbcType="INTEGER" />
+    <result column="rec_begin_to_bend" property="recBeginToBend" jdbcType="DECIMAL" />
+    <result column="rec_standing_broad_jump" property="recStandingBroadJump" jdbcType="DECIMAL" />
+    <result column="rec_sit_up" property="recSitUp" jdbcType="INTEGER" />
+    <result column="rec_chinning" property="recChinning" jdbcType="INTEGER" />
+    <result column="rec_fivety_rrun" property="recFivetyRrun" jdbcType="INTEGER" />
+    <result column="rec_thousand_run" property="recThousandRun" jdbcType="VARCHAR" />
+    <result column="rec_eight_handred_run" property="recEightHandredRun" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rec_year, stdnt_id, rec_height, rec_eight, rec_vtal_capacity, rec_begin_to_bend, 
+    rec_standing_broad_jump, rec_sit_up, rec_chinning, rec_fivety_rrun, rec_thousand_run, 
+    rec_eight_handred_run
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pesystem.po.RecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from record
+    where rec_year = #{recYear,jdbcType=DATE}
+      and stdnt_id = #{stdntId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from record
+    where rec_year = #{recYear,jdbcType=DATE}
+      and stdnt_id = #{stdntId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pesystem.po.RecordExample" >
+    delete from record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pesystem.po.Record" >
+    insert into record (rec_year, stdnt_id, rec_height, 
+      rec_eight, rec_vtal_capacity, rec_begin_to_bend, 
+      rec_standing_broad_jump, rec_sit_up, rec_chinning, 
+      rec_fivety_rrun, rec_thousand_run, rec_eight_handred_run
+      )
+    values (#{recYear,jdbcType=DATE}, #{stdntId,jdbcType=CHAR}, #{recHeight,jdbcType=DECIMAL}, 
+      #{recEight,jdbcType=DECIMAL}, #{recVtalCapacity,jdbcType=INTEGER}, #{recBeginToBend,jdbcType=DECIMAL}, 
+      #{recStandingBroadJump,jdbcType=DECIMAL}, #{recSitUp,jdbcType=INTEGER}, #{recChinning,jdbcType=INTEGER}, 
+      #{recFivetyRrun,jdbcType=INTEGER}, #{recThousandRun,jdbcType=VARCHAR}, #{recEightHandredRun,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pesystem.po.Record" >
+    insert into record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recYear != null" >
+        rec_year,
+      </if>
+      <if test="stdntId != null" >
+        stdnt_id,
+      </if>
+      <if test="recHeight != null" >
+        rec_height,
+      </if>
+      <if test="recEight != null" >
+        rec_eight,
+      </if>
+      <if test="recVtalCapacity != null" >
+        rec_vtal_capacity,
+      </if>
+      <if test="recBeginToBend != null" >
+        rec_begin_to_bend,
+      </if>
+      <if test="recStandingBroadJump != null" >
+        rec_standing_broad_jump,
+      </if>
+      <if test="recSitUp != null" >
+        rec_sit_up,
+      </if>
+      <if test="recChinning != null" >
+        rec_chinning,
+      </if>
+      <if test="recFivetyRrun != null" >
+        rec_fivety_rrun,
+      </if>
+      <if test="recThousandRun != null" >
+        rec_thousand_run,
+      </if>
+      <if test="recEightHandredRun != null" >
+        rec_eight_handred_run,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recYear != null" >
+        #{recYear,jdbcType=DATE},
+      </if>
+      <if test="stdntId != null" >
+        #{stdntId,jdbcType=CHAR},
+      </if>
+      <if test="recHeight != null" >
+        #{recHeight,jdbcType=DECIMAL},
+      </if>
+      <if test="recEight != null" >
+        #{recEight,jdbcType=DECIMAL},
+      </if>
+      <if test="recVtalCapacity != null" >
+        #{recVtalCapacity,jdbcType=INTEGER},
+      </if>
+      <if test="recBeginToBend != null" >
+        #{recBeginToBend,jdbcType=DECIMAL},
+      </if>
+      <if test="recStandingBroadJump != null" >
+        #{recStandingBroadJump,jdbcType=DECIMAL},
+      </if>
+      <if test="recSitUp != null" >
+        #{recSitUp,jdbcType=INTEGER},
+      </if>
+      <if test="recChinning != null" >
+        #{recChinning,jdbcType=INTEGER},
+      </if>
+      <if test="recFivetyRrun != null" >
+        #{recFivetyRrun,jdbcType=INTEGER},
+      </if>
+      <if test="recThousandRun != null" >
+        #{recThousandRun,jdbcType=VARCHAR},
+      </if>
+      <if test="recEightHandredRun != null" >
+        #{recEightHandredRun,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pesystem.po.RecordExample" resultType="java.lang.Integer" >
+    select count(*) from record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update record
+    <set >
+      <if test="record.recYear != null" >
+        rec_year = #{record.recYear,jdbcType=DATE},
+      </if>
+      <if test="record.stdntId != null" >
+        stdnt_id = #{record.stdntId,jdbcType=CHAR},
+      </if>
+      <if test="record.recHeight != null" >
+        rec_height = #{record.recHeight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recEight != null" >
+        rec_eight = #{record.recEight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recVtalCapacity != null" >
+        rec_vtal_capacity = #{record.recVtalCapacity,jdbcType=INTEGER},
+      </if>
+      <if test="record.recBeginToBend != null" >
+        rec_begin_to_bend = #{record.recBeginToBend,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recStandingBroadJump != null" >
+        rec_standing_broad_jump = #{record.recStandingBroadJump,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recSitUp != null" >
+        rec_sit_up = #{record.recSitUp,jdbcType=INTEGER},
+      </if>
+      <if test="record.recChinning != null" >
+        rec_chinning = #{record.recChinning,jdbcType=INTEGER},
+      </if>
+      <if test="record.recFivetyRrun != null" >
+        rec_fivety_rrun = #{record.recFivetyRrun,jdbcType=INTEGER},
+      </if>
+      <if test="record.recThousandRun != null" >
+        rec_thousand_run = #{record.recThousandRun,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recEightHandredRun != null" >
+        rec_eight_handred_run = #{record.recEightHandredRun,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update record
+    set rec_year = #{record.recYear,jdbcType=DATE},
+      stdnt_id = #{record.stdntId,jdbcType=CHAR},
+      rec_height = #{record.recHeight,jdbcType=DECIMAL},
+      rec_eight = #{record.recEight,jdbcType=DECIMAL},
+      rec_vtal_capacity = #{record.recVtalCapacity,jdbcType=INTEGER},
+      rec_begin_to_bend = #{record.recBeginToBend,jdbcType=DECIMAL},
+      rec_standing_broad_jump = #{record.recStandingBroadJump,jdbcType=DECIMAL},
+      rec_sit_up = #{record.recSitUp,jdbcType=INTEGER},
+      rec_chinning = #{record.recChinning,jdbcType=INTEGER},
+      rec_fivety_rrun = #{record.recFivetyRrun,jdbcType=INTEGER},
+      rec_thousand_run = #{record.recThousandRun,jdbcType=VARCHAR},
+      rec_eight_handred_run = #{record.recEightHandredRun,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pesystem.po.Record" >
+    update record
+    <set >
+      <if test="recHeight != null" >
+        rec_height = #{recHeight,jdbcType=DECIMAL},
+      </if>
+      <if test="recEight != null" >
+        rec_eight = #{recEight,jdbcType=DECIMAL},
+      </if>
+      <if test="recVtalCapacity != null" >
+        rec_vtal_capacity = #{recVtalCapacity,jdbcType=INTEGER},
+      </if>
+      <if test="recBeginToBend != null" >
+        rec_begin_to_bend = #{recBeginToBend,jdbcType=DECIMAL},
+      </if>
+      <if test="recStandingBroadJump != null" >
+        rec_standing_broad_jump = #{recStandingBroadJump,jdbcType=DECIMAL},
+      </if>
+      <if test="recSitUp != null" >
+        rec_sit_up = #{recSitUp,jdbcType=INTEGER},
+      </if>
+      <if test="recChinning != null" >
+        rec_chinning = #{recChinning,jdbcType=INTEGER},
+      </if>
+      <if test="recFivetyRrun != null" >
+        rec_fivety_rrun = #{recFivetyRrun,jdbcType=INTEGER},
+      </if>
+      <if test="recThousandRun != null" >
+        rec_thousand_run = #{recThousandRun,jdbcType=VARCHAR},
+      </if>
+      <if test="recEightHandredRun != null" >
+        rec_eight_handred_run = #{recEightHandredRun,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rec_year = #{recYear,jdbcType=DATE}
+      and stdnt_id = #{stdntId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pesystem.po.Record" >
+    update record
+    set rec_height = #{recHeight,jdbcType=DECIMAL},
+      rec_eight = #{recEight,jdbcType=DECIMAL},
+      rec_vtal_capacity = #{recVtalCapacity,jdbcType=INTEGER},
+      rec_begin_to_bend = #{recBeginToBend,jdbcType=DECIMAL},
+      rec_standing_broad_jump = #{recStandingBroadJump,jdbcType=DECIMAL},
+      rec_sit_up = #{recSitUp,jdbcType=INTEGER},
+      rec_chinning = #{recChinning,jdbcType=INTEGER},
+      rec_fivety_rrun = #{recFivetyRrun,jdbcType=INTEGER},
+      rec_thousand_run = #{recThousandRun,jdbcType=VARCHAR},
+      rec_eight_handred_run = #{recEightHandredRun,jdbcType=VARCHAR}
+    where rec_year = #{recYear,jdbcType=DATE}
+      and stdnt_id = #{stdntId,jdbcType=CHAR}
+  </update>
+</mapper>

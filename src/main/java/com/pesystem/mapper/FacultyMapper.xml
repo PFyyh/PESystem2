@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pesystem.mapper.FacultyMapper" >
+  <resultMap id="BaseResultMap" type="com.pesystem.po.Faculty" >
+    <id column="faculty_id" property="facultyId" jdbcType="INTEGER" />
+    <result column="faculty_name" property="facultyName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ExtendsResultMap" type="com.pesystem.vo.FacultyCustom" extends="BaseResultMap">
+
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    faculty_id, faculty_name
+  </sql>
+  <select id="selectByExample" resultMap="ExtendsResultMap" parameterType="com.pesystem.po.FacultyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from faculty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from faculty
+    where faculty_id = #{facultyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from faculty
+    where faculty_id = #{facultyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pesystem.po.FacultyExample" >
+    delete from faculty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pesystem.po.Faculty" >
+    insert into faculty (faculty_id, faculty_name)
+    values (#{facultyId,jdbcType=INTEGER}, #{facultyName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pesystem.po.Faculty" >
+    insert into faculty
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="facultyId != null" >
+        faculty_id,
+      </if>
+      <if test="facultyName != null" >
+        faculty_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="facultyId != null" >
+        #{facultyId,jdbcType=INTEGER},
+      </if>
+      <if test="facultyName != null" >
+        #{facultyName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pesystem.po.FacultyExample" resultType="java.lang.Integer" >
+    select count(*) from faculty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update faculty
+    <set >
+      <if test="record.facultyId != null" >
+        faculty_id = #{record.facultyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.facultyName != null" >
+        faculty_name = #{record.facultyName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update faculty
+    set faculty_id = #{record.facultyId,jdbcType=INTEGER},
+      faculty_name = #{record.facultyName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pesystem.po.Faculty" >
+    update faculty
+    <set >
+      <if test="facultyName != null" >
+        faculty_name = #{facultyName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where faculty_id = #{facultyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pesystem.po.Faculty" >
+    update faculty
+    set faculty_name = #{facultyName,jdbcType=VARCHAR}
+    where faculty_id = #{facultyId,jdbcType=INTEGER}
+  </update>
+</mapper>

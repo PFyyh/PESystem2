@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pesystem.mapper.PeClassMapper" >
+  <resultMap id="BaseResultMap" type="com.pesystem.po.PeClass" >
+    <id column="pe_class_Id" property="peClassId" jdbcType="VARCHAR" />
+    <result column="tch_id" property="tchId" jdbcType="VARCHAR" />
+    <result column="pe_class_name" property="peClassName" jdbcType="VARCHAR" />
+    <result column="pe_class_createtime" property="peClassCreatetime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pe_class_Id, tch_id, pe_class_name, pe_class_createtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pesystem.po.PeClassExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pe_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from pe_class
+    where pe_class_Id = #{peClassId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pe_class
+    where pe_class_Id = #{peClassId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pesystem.po.PeClassExample" >
+    delete from pe_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pesystem.po.PeClass" >
+    insert into pe_class (pe_class_Id, tch_id, pe_class_name, 
+      pe_class_createtime)
+    values (#{peClassId,jdbcType=VARCHAR}, #{tchId,jdbcType=VARCHAR}, #{peClassName,jdbcType=VARCHAR}, 
+      #{peClassCreatetime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pesystem.po.PeClass" >
+    insert into pe_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="peClassId != null" >
+        pe_class_Id,
+      </if>
+      <if test="tchId != null" >
+        tch_id,
+      </if>
+      <if test="peClassName != null" >
+        pe_class_name,
+      </if>
+      <if test="peClassCreatetime != null" >
+        pe_class_createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="peClassId != null" >
+        #{peClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="tchId != null" >
+        #{tchId,jdbcType=VARCHAR},
+      </if>
+      <if test="peClassName != null" >
+        #{peClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="peClassCreatetime != null" >
+        #{peClassCreatetime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pesystem.po.PeClassExample" resultType="java.lang.Integer" >
+    select count(*) from pe_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pe_class
+    <set >
+      <if test="record.peClassId != null" >
+        pe_class_Id = #{record.peClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tchId != null" >
+        tch_id = #{record.tchId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.peClassName != null" >
+        pe_class_name = #{record.peClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.peClassCreatetime != null" >
+        pe_class_createtime = #{record.peClassCreatetime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pe_class
+    set pe_class_Id = #{record.peClassId,jdbcType=VARCHAR},
+      tch_id = #{record.tchId,jdbcType=VARCHAR},
+      pe_class_name = #{record.peClassName,jdbcType=VARCHAR},
+      pe_class_createtime = #{record.peClassCreatetime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pesystem.po.PeClass" >
+    update pe_class
+    <set >
+      <if test="tchId != null" >
+        tch_id = #{tchId,jdbcType=VARCHAR},
+      </if>
+      <if test="peClassName != null" >
+        pe_class_name = #{peClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="peClassCreatetime != null" >
+        pe_class_createtime = #{peClassCreatetime,jdbcType=DATE},
+      </if>
+    </set>
+    where pe_class_Id = #{peClassId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pesystem.po.PeClass" >
+    update pe_class
+    set tch_id = #{tchId,jdbcType=VARCHAR},
+      pe_class_name = #{peClassName,jdbcType=VARCHAR},
+      pe_class_createtime = #{peClassCreatetime,jdbcType=DATE}
+    where pe_class_Id = #{peClassId,jdbcType=VARCHAR}
+  </update>
+</mapper>
